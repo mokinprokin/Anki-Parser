@@ -1,0 +1,27 @@
+[project]
+name = "anki_parser"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Макар Павлович",email = "106832520+mokinprokin@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mcp[cli] (>=2.3.0,<3.0.0)",
+    "pydantic-settings (>=2.15.0,<3.0.0)",
+    "aiohttp (>=3.14.4,<4.0.0)"
+]
+
+[project.scripts]
+anki_parser = "anki_parser.main:main"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "smart-commit-tool (>=3.0.4,<4.0.0)",
+    "ruff (>=0.16.10,<0.17.0)"
+]
