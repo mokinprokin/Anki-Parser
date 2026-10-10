@@ -1,8 +1,8 @@
 from functools import wraps
 from typing import Any
 
-from anki_mcp_server.core import logger
-from anki_mcp_server.core.exceptions import AnkiAPIError, AnkiConnectionError
+from anki_parser.core import logger
+from anki_parser.core.exceptions import AnkiAPIError, AnkiConnectionError
 
 
 def handle_anki_errors(func):
