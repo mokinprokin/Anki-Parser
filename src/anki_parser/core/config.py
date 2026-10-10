@@ -32,10 +32,9 @@ class Settings(BaseSettings):
         default="http://127.0.0.1:8765",
     )
     default_deck: str = Field(
-        default="English",
+        default="Default",
     )
     request_timeout: int = Field(default=5)
-    instructions_filename: str = Field(default="INSTRUCTIONS.md")
 
     model_config = SettingsConfigDict(
         env_file=resolve_env_file(), env_file_encoding="utf-8", extra="ignore"

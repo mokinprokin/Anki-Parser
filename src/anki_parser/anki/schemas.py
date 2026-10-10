@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class NoteCreateRequest(BaseModel):
@@ -20,10 +20,20 @@ class TagsAddRequest(BaseModel):
     tags: str = Field(..., description="Space-separated string of tags")
 
 
+class NoteFields(BaseModel):
+    front: str = Field(default="", alias="Front")
+    back: str = Field(default="", alias="Back")
+
+    model_config = ConfigDict(
+        populate_by_name=True,
+        extra="allow",
+    )
+
+
 class AnkiNote(BaseModel):
     note_id: int = Field(alias="note_id")
     model_name: str
-    fields: dict[str, str]
+    fields: NoteFields
     tags: list[str]
 
 

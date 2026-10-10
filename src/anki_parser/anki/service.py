@@ -1,10 +1,10 @@
 from typing import Any
 
-from anki_mcp_server.core.config import settings
-from anki_mcp_server.core.exceptions import AnkiAPIError, AnkiConnectionError
-from anki_mcp_server.core.http_client import HttpClient, http_client
-from anki_mcp_server.core.logger import logger
-from anki_mcp_server.core.utils import clean_html
+from anki_parser.core.config import settings
+from anki_parser.core.exceptions import AnkiAPIError, AnkiConnectionError
+from anki_parser.core.http_client import HttpClient, http_client
+from anki_parser.core.logger import logger
+from anki_parser.core.utils import clean_html
 
 from .schemas import (
     AnkiCard,
