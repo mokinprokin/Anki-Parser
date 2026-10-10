@@ -22,7 +22,7 @@ uvx --from git+https://github.com/mokinprokin/AnkiParser.git anki_parser
 ```
 
 🔄 How the Workflow Looks
-
+```markdown
 [ AI Output (ChatGPT / Claude / LM Studio) ]
                   │
                   ▼ (User hits Ctrl + C)
@@ -38,6 +38,7 @@ uvx --from git+https://github.com/mokinprokin/AnkiParser.git anki_parser
                   │
                   ▼
  [ Windows 11 Native Toast Notification 🔔 ]
+```
 
 1.  You ask an AI to generate vocabulary using our strict delimiter format.
 2.  You select the output and press Ctrl + C.
@@ -55,14 +56,14 @@ Give this prompt to ChatGPT, Claude, LM Studio, or local models:
 
 ### Formatting Protocol for Automated Anki Parsing
 Whenever you generate vocabulary cards, format them STRICTLY using these delimiters:
-
+```markdown
 ===DECK: [Deck Name if specified, e.g. English]===
 ===FRONT===
 [Definition, fill-in-the-blank examples, or collocations without the target word]
 ===BACK===
 [Target word/phrase accompanied by phonetic transcription or translation]
 ===END===
-
+```
 📖 Full System Prompt: You can find the complete, battle-tested agent prompt with
 multi-scenario rules (single words, phrases, synonym clusters) and few-shot
 examples in [`instruction.md`](instruction.md).
@@ -110,11 +111,11 @@ uv run anki_parser
 Environment Configuration (.env)
 
 You can override defaults by placing a .env file in the root directory:
-
+```
 ANKI_CONNECT_URL=http://127.0.0.1:8765
 DEFAULT_DECK=English
 REQUEST_TIMEOUT=5
-
+```
 🪟 Windows Silent Autostart Setup
 
 To make the agent start automatically on Windows boot without opening a terminal
