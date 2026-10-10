@@ -18,7 +18,7 @@ You **do not need to clone this repository**, create virtual environments, or ru
 Thanks to **[`uv`](https://docs.astral.sh/uv/)**, you can run the agent straight from GitHub in a single command:
 
 ```powershell
-uvx --from git+https://github.com/mokinprokin/AnkiParser.git anki_parser
+uvx --from git+https://github.com/mokinprokin/Anki-Parser.git anki_parser
 ```
 
 🔄 How the Workflow Looks
