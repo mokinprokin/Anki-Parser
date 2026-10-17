@@ -4,12 +4,13 @@ from typing import Any
 
 import aiohttp
 
+from anki_parser.base import BaseExecutionComponent
+
 from .config import settings
 from .exceptions import AnkiConnectionError, AnkiServiceNotInitializedError
-from .logger import logger
 
 
-class HttpClient:
+class HttpClient(BaseExecutionComponent):
     def __init__(self) -> None:
         self._session: aiohttp.ClientSession | None = None
         self._connector: aiohttp.TCPConnector | None = None
@@ -20,7 +21,7 @@ class HttpClient:
         Called once during application startup.
         """
         if self._session and not self._session.closed:
-            logger.warning("HttpClient is already running.")
+            self.logger.warning("HttpClient is already running.")
             return
 
         self._connector = aiohttp.TCPConnector(
@@ -34,7 +35,7 @@ class HttpClient:
             timeout=timeout,
             headers={"Content-Type": "application/json", "Connection": "close"},
         )
-        logger.info("HttpClient connection pool established successfully.")
+        self.logger.info("HttpClient connection pool established successfully.")
 
     async def close(self) -> None:
         """
@@ -42,12 +43,12 @@ class HttpClient:
         Called during application shutdown.
         """
         if self._session and not self._session.closed:
-            logger.info("Draining HTTP connection pool...")
+            self.logger.info("Draining HTTP connection pool...")
             await self._session.close()
             await asyncio.sleep(0.25)
             self._session = None
             self._connector = None
-            logger.info("HttpClient connection pool closed.")
+            self.logger.info("HttpClient connection pool closed.")
 
     @asynccontextmanager
     async def request(self, method: str, url: str, **kwargs: Any):
@@ -61,7 +62,7 @@ class HttpClient:
                 yield response
 
         except TimeoutError as exc:
-            logger.error(
+            self.logger.error(
                 "Request to %s timed out after %ss", url, settings.request_timeout
             )
             raise AnkiConnectionError(
@@ -69,13 +70,13 @@ class HttpClient:
             ) from exc
 
         except aiohttp.ClientConnectorError as exc:
-            logger.error("Failed to establish TCP connection to %s: %s", url, exc)
+            self.logger.error("Failed to establish TCP connection to %s: %s", url, exc)
             raise AnkiConnectionError(
                 f"Failed to connect to host at '{url}'. Verify that the target service is running."
             ) from exc
 
         except aiohttp.ClientError as exc:
-            logger.error("Unexpected aiohttp transport failure: %s", exc)
+            self.logger.error("Unexpected aiohttp transport failure: %s", exc)
             raise AnkiConnectionError(f"HTTP transport failure: {exc}") from exc
 
 

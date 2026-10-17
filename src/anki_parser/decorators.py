@@ -1,8 +1,8 @@
 from functools import wraps
 from typing import Any
 
-from anki_parser.core import logger
 from anki_parser.core.exceptions import AnkiAPIError, AnkiConnectionError
+from anki_parser.core.logger import logger
 
 
 def handle_anki_errors(func):
@@ -13,9 +13,9 @@ def handle_anki_errors(func):
         except (AnkiConnectionError, AnkiAPIError) as exc:
             error_msg = f"Error executing '{func.__name__}': {exc}"
             logger.error(error_msg)
-            return error_msg
-        except Exception as exc:
+            raise
+        except Exception:
             logger.exception("Unexpected error in '%s'", func.__name__)
-            return f"Unexpected Error: {exc}"
+            raise
 
     return wrapper

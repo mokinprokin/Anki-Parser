@@ -1,8 +1,7 @@
 import logging
-import sys
 
 
-def setup_logger(name: str = "anki_mcp") -> logging.Logger:
+def setup_logger(name: str = "anki_parser") -> logging.Logger:
     """
     Configure and return a centralized application logger.
 
@@ -10,10 +9,10 @@ def setup_logger(name: str = "anki_mcp") -> logging.Logger:
     which is reserved exclusively for the MCP JSON-RPC protocol.
     """
     logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
 
     if not logger.handlers:
-        handler = logging.StreamHandler(sys.stderr)
+        handler = logging.StreamHandler()
         formatter = logging.Formatter(
             fmt="%(asctime)s | %(levelname)-8s | %(name)s | %(message)s",
             datefmt="%Y-%m-%d %H:%M:%S",

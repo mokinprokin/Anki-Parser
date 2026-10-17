@@ -1,6 +1,8 @@
 import asyncio
 import re
+
 from anki_parser.anki.schemas import AnkiNote
+
 from .service import AnkiService, anki_service
 
 
@@ -8,6 +10,7 @@ class CacheService:
     def __init__(self, service: AnkiService) -> None:
         self.service = service
         self.cached_backs: set[str] = set()
+        self._is_initialized: bool = False
 
     @staticmethod
     def _normalize(text: str) -> str:
@@ -25,11 +28,16 @@ class CacheService:
                 back_value = note.fields.back
                 if back_value:
                     self.cached_backs.add(self._normalize(back_value))
+        self._is_initialized = True
 
-    def exists(self, back: str) -> bool:
+    async def exists(self, back: str) -> bool:
+        if not self._is_initialized:
+            await self.warm_up()
         return self._normalize(back) in self.cached_backs
 
-    def add(self, back: str) -> None:
+    async def add(self, back: str) -> None:
+        if not self._is_initialized:
+            await self.warm_up()
         self.cached_backs.add(self._normalize(back))
 
 
