@@ -1,10 +1,10 @@
 import os
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 
 from anki_parser.core.logger import logger
-from anki_parser.core.utils import show_toast
+from anki_parser.core.toast import notifier
 
 STARTUP_SCRIPT_NAME = "AnkiClipboardAgent.vbs"
 WORKER_MODULE = "anki_parser.worker"
@@ -52,7 +52,7 @@ def main() -> None:
 
     vbs_path = register_in_startup(src_dir=src_dir)
     spawn_silent_worker(vbs_path=vbs_path)
-    show_toast(
+    notifier.notify(
         "Anki Agent Installed", "Added to Windows Startup and running in background."
     )
 

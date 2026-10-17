@@ -44,3 +44,14 @@ class AnkiCard(BaseModel):
     reps: int = Field(description="Total number of reviews")
     due: int = Field(description="Due date or queue state")
     fields: dict[str, str]
+
+class BatchPreview(BaseModel):
+    total_parsed: int
+    new_cards_count: int
+    skipped_duplicates: int
+    first_card_preview: str
+    pending_cards: list[NoteCreateRequest]
+
+    @property
+    def has_new_cards(self) -> bool:
+        return self.new_cards_count > 0
